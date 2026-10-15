@@ -10,7 +10,6 @@ class Juego:
         if self.numeroDeVidas > self.record:
             self.record = self.numeroDeVidas
     def quitaVida(self):
-        """Devuelve True si aún le quedan vidas."""
         self.numeroDeVidas -= 1
         return self.numeroDeVidas > 0
 class JuegoAdivinaNumero(Juego):
@@ -28,7 +27,7 @@ class JuegoAdivinaNumero(Juego):
         while self.numeroDeVidas > 0:
             numero = int(input())
             if not self.validaNumero(numero):
-                continue  # inválido: no quita vida
+                continue
             if numero == self.numeroAAdivinar:
                 print("Acertaste!!")
                 self.actualizaRecord()
