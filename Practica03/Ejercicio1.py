@@ -1,49 +1,44 @@
 import random
 class Juego:
     def __init__(self, numeroDeVidas):
+        self.numeroDeVidasIniciales = numeroDeVidas
         self.numeroDeVidas = numeroDeVidas
         self.record = 0
-
     def reiniciaPartida(self):
-        self.numeroDeVidas = 3
-
+        self.numeroDeVidas = self.numeroDeVidasIniciales
     def actualizaRecord(self):
-        self.record += 1
-
+        if self.numeroDeVidas > self.record:
+            self.record = self.numeroDeVidas
     def quitaVida(self):
-        self.numeroDeVidas -= 1
+        self.numeroDeVidas = self.numeroDeVidas - 1
         return self.numeroDeVidas > 0
-
 class JuegoAdivinaNumero(Juego):
     def __init__(self, numeroDeVidas):
         super().__init__(numeroDeVidas)
         self.numeroAAdivinar = 0
-
     def juega(self):
         self.reiniciaPartida()
         self.numeroAAdivinar = random.randint(0, 10)
-
-        while True:
-            numero = int(input("Adivina un número entre 0 y 10: "))
-
+        print("Adivina un número entre 0 y 10")
+        while self.numeroDeVidas > 0:
+            numero = int(input())
             if numero == self.numeroAAdivinar:
-                print("¡Acertaste!!")
+                print("¡Acertaste!")
                 self.actualizaRecord()
                 return
             else:
-                if self.quitaVida():
+                quedanVidas = self.quitaVida()
+                if quedanVidas:
                     if numero < self.numeroAAdivinar:
-                        print("El número a adivinar es mayor. Intenta de nuevo.")
+                        print("El número a adivinar es MAYOR")
                     else:
-                        print("El número a adivinar es menor. Intenta de nuevo.")
+                        print("El número a adivinar es MENOR")
                 else:
-                    print("Te quedaste sin vidas. Fin del juego.")
+                    print(f"Sin vidas. El número era {self.numeroAAdivinar}")
                     return
-
 class Aplicacion:
     @staticmethod
     def main():
         juego = JuegoAdivinaNumero(3)
         juego.juega()
-
 Aplicacion.main()
